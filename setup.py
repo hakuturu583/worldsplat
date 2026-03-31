@@ -1,0 +1,27 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="worldsplat",
+    version="1.0.0",
+    description="WorldSplat: Gaussian-Centric Feed-Forward 4D Scene Generation for Autonomous Driving",
+    author="Ziyue Zhu et al.",
+    packages=find_packages(),
+    python_requires=">=3.10",
+    install_requires=[
+        "torch>=2.1.0",
+        "torchvision>=0.16.0",
+        "diffusers>=0.25.0",
+        "transformers>=4.36.0",
+        "einops>=0.7.0",
+        "omegaconf>=2.3.0",
+        "safetensors>=0.4.0",
+        "colossalai>=0.3.0",
+        "lpips>=0.1.4",
+        "gsplat>=1.0.0",
+        "opencv-python>=4.8.0",
+        "Pillow>=10.0.0",
+        "tqdm>=4.66.0",
+        "rotary-embedding-torch>=0.5.0",
+        "timm>=0.9.0",
+    ],
+)

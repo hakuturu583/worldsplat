@@ -1,0 +1,72 @@
+mask_ratios:
+  mask_no: 0.4
+  mask_quarter_head: 0.6
+condition_frames_max: 4
+
+diffusion:
+  target: worldsplat.diffusion.ldm.LatentDiffusion
+  params:
+    linear_start: 0.00085
+    linear_end: 0.012
+    timesteps: 1000
+
+model:
+  target: worldsplat.diffusion.stdit2.STDiT2_XL_2
+  params:
+    input_sq_size: 512
+    qk_norm: True
+    enable_flashattn: True
+    enable_layernorm_kernel: False
+    model_max_length: 200
+
+grounding_tokenizer:
+  target: worldsplat.diffusion.grounding_net.PositionNet
+  params:
+    in_dim: 768
+    out_dim: 768
+
+train_dataset_names:
+  target: worldsplat.data.nuscenes_dataset.NuScenesDataset
+  params:
+    mode: render
+    crop_mode: False
+    crop_size: 900
+    all_view_num: 6
+    prob_real_caption: 0.2
+    txt_format: boxCategory
+    training: True
+    AllDataPath: data/nuscenes
+    AllRoadSketchPath: data/nuscenes/cam_road_sketch
+    RenderMapPath: data/nuscenes/render_maps
+    CaptionPath: data/nuscenes/scene_caption
+    train_json_path: data/nuscenes/json/nuscenes_workshop_train_seq.json
+    is_scale_to_01: True
+    min_box_size: 0.0005
+    max_boxes_per_data: 30
+    scale_dataset: 1
+    mask_render_map: True
+
+val_dataset_names:
+  target: worldsplat.data.nuscenes_dataset.NuScenesDataset
+  params:
+    mode: render
+    image_size: 512
+    crop_mode: False
+    crop_size: 900
+    all_view_num: 6
+    prob_real_caption: 0
+    txt_format: boxCategory
+    training: False
+    AllDataPath: data/nuscenes
+    AllRoadSketchPath: data/nuscenes/cam_road_sketch
+    RenderMapPath: data/nuscenes/render_maps
+    CaptionPath: data/nuscenes/scene_caption
+    train_json_path: data/nuscenes/json/nuscenes_workshop_val_seq.json
+    is_scale_to_01: True
+    min_box_size: 0.0005
+    max_boxes_per_data: 30
+    scale_dataset: 1.0
+    mask_render_map: True
+
+grounding_tokenizer_input:
+  target: worldsplat.diffusion.grounding_input.GroundingNetInput
