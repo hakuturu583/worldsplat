@@ -52,21 +52,22 @@ It introduces a **Gaussian-centric representation** that directly produces contr
 git clone https://github.com/wm-research/worldsplat.git
 cd worldsplat
 
-# Create conda environment
-conda create -n worldsplat python=3.10 -y
-conda activate worldsplat
+# Create and sync a uv-managed Python 3.10 environment
+uv python install 3.10
+uv sync
+```
 
-# Install PyTorch (adjust for your CUDA version)
-pip install torch==2.2.0 torchvision==0.17.0 --index-url https://download.pytorch.org/whl/cu118
+`uv sync` installs the project in editable mode together with all runtime
+dependencies defined in `pyproject.toml`. By default, `torch` and `torchvision`
+are resolved from the CUDA 11.8 PyTorch wheel index via `tool.uv.sources`.
 
-# Install dependencies
-pip install -r requirements.txt
+If you need a different PyTorch build, override the source explicitly. For
+example, for CPU-only wheels:
 
-# Install WorldSplat
-pip install -e .
-
-# Install gsplat (required for GS Decoder)
-pip install gsplat
+```bash
+uv sync \
+  --index https://pypi.org/simple \
+  --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 
 ### Pre-trained Models
@@ -187,7 +188,7 @@ bash scripts/train_gs_decoder.sh
 Run the full three-stage inference pipeline:
 
 ```bash
-python tools/inference.py \
+uv run python tools/inference.py \
     --config_stage1 configs/diffusion_4d_aware.yaml \
     --config_stage2 configs/diffusion_enhanced.yaml \
     --ckpt_stage1 /path/to/stage1_checkpoint.pt \

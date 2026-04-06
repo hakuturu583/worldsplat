@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldsplat"
+version = "1.0.0"
+description = "WorldSplat: Gaussian-Centric Feed-Forward 4D Scene Generation for Autonomous Driving"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Ziyue Zhu et al." },
+]
+dependencies = [
+  "accelerate>=1.0.0",
+  "colossalai>=0.3.0",
+  "diffusers>=0.25.0",
+  "einops>=0.7.0",
+  "gsplat>=1.0.0",
+  "imageio>=2.34.0",
+  "lpips>=0.1.4",
+  "mmengine>=0.10.0",
+  "numpy>=1.26.0",
+  "omegaconf>=2.3.0",
+  "opencv-python>=4.8.0",
+  "Pillow>=10.0.0",
+  "plyfile>=1.1.0",
+  "rotary-embedding-torch>=0.5.0",
+  "safetensors>=0.4.0",
+  "scipy>=1.11.0",
+  "timm>=0.9.0",
+  "torch>=2.1.0",
+  "torchvision>=0.16.0",
+  "tqdm>=4.66.0",
+  "transformers>=4.36.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["worldsplat*"]
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu118" }]
+torchvision = [{ index = "pytorch-cu118" }]
